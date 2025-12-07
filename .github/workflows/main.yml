@@ -13,7 +13,9 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
+    - name: Checkout code                # <-- Yeh first hona chahiye
+      uses: actions/checkout@v3
+    - name: Azure Login  
       uses: Azure/login@v2.3.0
       with:
         client-id: 435207cd-1a2b-46b3-af85-67f3ebf5e68d
