@@ -1,0 +1,39 @@
+name: build and push ACR
+on: 
+  workflow_dispatch:
+permissions:
+  id-token: write
+  contents: read
+env:
+  IMAGE_NAME: capston-frontend-ui
+  IMAGE_TAG: v1
+  ACR_NAME: rk8sacr
+  ACR_LOGIN_SERVER: rk8sacr.azurecr.io
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: Azure/login@v2.3.0
+      with:
+        client-id: 435207cd-1a2b-46b3-af85-67f3ebf5e68d
+        tenant-id: 215650d6-bc81-4e8e-ad7a-3c3ff4c8af04
+        subscription-id: 792b5051-461b-4568-abbd-b3d549f22f8c
+    - name: Log in to ACR
+      run: |
+        az acr login --name $ACR_NAME
+
+    - name: Build Docker Image
+      run: |
+        docker build -t $IMAGE_NAME:$IMAGE_TAG .
+
+    - name: Tag Docker Image for ACR
+      run: |
+        docker tag $IMAGE_NAME:$IMAGE_TAG $ACR_LOGIN_SERVER/$IMAGE_NAME:$IMAGE_TAG
+
+    - name: Push Docker Image to ACR
+      run: |
+        docker push $ACR_LOGIN_SERVER/$IMAGE_NAME:$IMAGE_TAG
+  
+  
+  
