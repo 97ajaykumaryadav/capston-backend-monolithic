@@ -39,6 +39,12 @@ jobs:
     - name: Save Image Locally as TAR for Scanning
       run: docker save $IMAGE_NAME:$IMAGE_TAG -o image.tar
 
+    - name: Upload Image TAR
+      uses: actions/upload-artifact@v3
+      with:
+        name: image
+        path: image.tar
+
     outputs:
       image-tar: image.tar
 
@@ -46,6 +52,11 @@ jobs:
     name: Scan Image using Trivy
     runs-on: ubuntu-latest
     needs: build
+    steps:
+    - name: Download Image TAR
+      uses: actions/download-artifact@v3
+      with:
+        name: image
 
     steps:
     - name: Install Trivy
