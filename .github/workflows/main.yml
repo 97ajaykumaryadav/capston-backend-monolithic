@@ -88,8 +88,13 @@ jobs:
     needs: manual-approval
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+    - name: Download Image TAR
+      uses: actions/download-artifact@v4
+      with:
+        name: image
+
+    - name: Load Docker Image
+      run: docker load -i image.tar
 
     - name: Azure Login (via OIDC)
       uses: Azure/login@v2.3.0
@@ -106,8 +111,3 @@ jobs:
 
     - name: Push Docker Image to ACR
       run: docker push $ACR_LOGIN_SERVER/$IMAGE_NAME:$IMAGE_TAG
-
-  
-
-  
-  
