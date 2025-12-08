@@ -57,8 +57,6 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: image
-
-    steps:
     - name: Install Trivy
       run: |
         sudo apt-get update
