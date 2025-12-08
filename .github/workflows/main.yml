@@ -68,7 +68,10 @@ jobs:
     runs-on: self-hosted
     needs: trivy-scan
     environment:        
-      name: prod-approval    
+      name: prod-approval 
+    steps:
+    - name: Waiting for manual approval
+      run: echo "Deployment will proceed after approval."
 
   push:
     name: Push Image to ACR
