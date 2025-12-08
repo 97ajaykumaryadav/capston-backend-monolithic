@@ -61,7 +61,7 @@ jobs:
     - name: Run Trivy Scan
       run: trivy image --exit-code 1 --severity HIGH,CRITICAL $IMAGE_NAME:$IMAGE_TAG
       continue-on-error: true
-  approval:
+  manual-approval:
     name: Push to ACR (with manual approval)
     runs-on: self-hosted
     needs: trivy-scan
@@ -71,7 +71,7 @@ jobs:
   push:
     name: Push Image to ACR
     runs-on: ubuntu-latest
-    needs: trivy-scan
+    needs: manual-approval
 
     steps:
     - name: Checkout code
