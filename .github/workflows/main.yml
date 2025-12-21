@@ -11,8 +11,8 @@ permissions:
 env:
   IMAGE_NAME: capston-backend-image
   IMAGE_TAG: v1
-  ACR_NAME: rk8sacr
-  ACR_LOGIN_SERVER: rk8sacr.azurecr.io
+  ACR_NAME: acrcapstondevcin
+  ACR_LOGIN_SERVER: acrcapstondevcin.azurecr.io
 
 jobs:
   build:
